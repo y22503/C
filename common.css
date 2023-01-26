@@ -1,0 +1,16 @@
+html {
+    font-size: 50px;
+    background-color: #009999;
+}
+.meiro {
+    text-align: center;
+    color: #fff;
+}
+button {
+    
+    color: #009999;
+    font-size: 50px;
+    border-radius: 10%;
+    display: flex;
+    justify-content: center;
+}
