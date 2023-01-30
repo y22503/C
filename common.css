@@ -1,16 +1,42 @@
 html {
-    font-size: 50px;
+    font-size: 30px;
     background-color: #009999;
+    font-family: sans-serif;
 }
 .meiro {
     text-align: center;
     color: #fff;
+    margin-top: 100px;
+    /* font-family: serif; */
 }
 button {
     
     color: #009999;
-    font-size: 50px;
-    border-radius: 10%;
+    font-size: 60px;
+    /* font-family: serif; */
+    /* border-radius: 10%; */
+    margin: 50px;
+    border-color: #fff;
+    width: 600px;
+} 
+.level{
+    color: #009999;
+    margin-top: 200px;
+    /* border-radius: 10%; */
+    
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
+#waku{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 1fr;
+    height: auto;
+    /* padding: 3%; */
+    border: solid 3px #000000;
+    border-radius: 25px;
+    background-color: #fff;
+  }

@@ -1,40 +1,6 @@
-const PATH = 0;
-const WALL = 1;
-
-let maze = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-　[1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
-　[1, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
-　[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-　[1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1],
-　[1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
-　[1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-　[1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-　[1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1],
-　[1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-　[1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
-　[1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1],
-　[1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
-　[1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
-　[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-];
-
-function print_maze() {
-  for(let col of maze) {
-    let arr = '';
-    for(let cell of col) {
-      if (cell == WALL) {
-        arr += '#';
-      } else if (cell == PATH) {
-        arr += ' ';
-      }
-    }
-   
-  }
-  let show = document.querySelector("p");
-  var array = maze;
-  var result = array.join('<br>');
-  show.innerHTML = result;
-}
-
-print_maze();
+var canvas = document.getElementById("waku");
+var w = 55;
+var h = 35;
+canvas.width = w * 16;	//canvasの横幅（よこはば）
+canvas.height = h * 16;
+var ctx = canvas.getContext('2d');
