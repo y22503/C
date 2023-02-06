@@ -1,192 +1,203 @@
-//canvasの設定
-var canvas = document.getElementById( 'canvas' );
-var w = 55;
-var h = 35;
-canvas.width = w*16;	//canvasの横幅（よこはば）
-canvas.height = h*16;	//canvasの縦幅（たてはば）
+const width = 15;
+const height = 15;
+const size = 20;
 
-//コンテキストの取得
-var ctx = canvas.getContext('2d');
+let gameover = false;
 
-//地面のImageオブジェクト
-// var mazeroad = new Image();
-// mazeroad.src = 'img/mazeroad.jpg';
-
-//壁のImageオブジェクト
-var mazewall = new Image();
-mazewall.src = 'Wall.PNG';
-
-//ゴールのImageオブジェクト
-var goal = new Object();
-goal.img = new Image();
-goal.img.src = 'Goal.PNG';
-goal.x=52*16;
-goal.y=32*16;
-
-//プレイヤーのオブジェクト作成
-var player = new Object();
-player.img = new Image();
-player.img.src = 'Player.PNG'
-player.x=52*16;
-player.y=12*16;
-player.move=0;
-
-//キーボードのオブジェクト作成
-var key = new Object();
-key.up = false;
-key.down = false;
-key.right = false;
-key.left = false;
-key.push = '';
-
-var maze = new Array(w * h);
-    for (var y = 1; y < h - 1; y ++) {
-        for (var x = 1; x < w - 1; x ++) {
-            maze[x + w * y] = 1;
+const map = [];
+for (let y = 0; y < height + 2; y++) {
+  map[y] = [];
+  for (let x = 0; x < width + 2; x++) {
+    if (x === 0 || y === 0 || x === width + 1 || y === height + 1) {
+      map[y][x] = {
+        checked: true
+      };
+    } else {
+      map[y][x] = {
+        checked: false,
+        wall: {
+          up: true,
+          down: true,
+          left: true,
+          right: true
         }
+      };
     }
-    
-// 開始位置と方向とパターン
-var startX = w - 5;        // 固定位置
-var startY = 4;            // 固定位置
-var dir = [[-1, 0], [0, -1], [1, 0], [0, 1]];
-var pattern = 
-    [[0, 1, 2, 3]
-    ,[0, 1, 3, 2]
-    ,[0, 2, 1, 3]
-    ,[0, 2, 3, 1]
-    ,[0, 3, 1, 2]
-    ,[0, 3, 2, 1]
-    ,[1, 0, 2, 3]
-    ,[1, 0, 3, 2]
-    ,[1, 2, 0, 3]
-    ,[1, 2, 3, 0]
-    ,[1, 3, 0, 2]
-    ,[1, 3, 2, 0]
-    ,[2, 0, 1, 3]
-    ,[2, 0, 3, 1]
-    ,[2, 1, 0, 3]
-    ,[2, 1, 3, 0]
-    ,[2, 3, 0, 1]
-    ,[2, 3, 1, 0]
-    ,[3, 0, 1, 2]
-    ,[3, 0, 2, 1]
-    ,[3, 1, 0, 2]
-    ,[3, 1, 2, 0]
-    ,[3, 2, 0, 1]
-    ,[3, 2, 1, 3]];
-
-// 穴掘り法
-function dig(x, y) {
-    // ランダムを使わずに生成
-    var type = (x + 3) * (y + 5) * 11% pattern.length;
-    for (var i = 0; i < dir.length; i++) {
-        var next = dir[pattern[type][i]];
-        if (maze[(x + next[0] * 2) + w * (y + next[1] * 2)] == 1) {
-            maze[(x + next[0] * 2) + w * (y + next[1] * 2)] = 0;
-            maze[(x + next[0]    ) + w * (y + next[1]    )] = 0;
-            dig(x + next[0] * 2, y + next[1] * 2);
-        }
-    }
-}
-dig(startX, startY);
-
-function main(){
-    ctx.fillStyle = "rgb(0,0,0)";
-
-    ctx.fillRect(0,0,880,560);
-
-    for(var y=0; y<h; y++){
-        for(var x=0; x<w; x++){
-            if(maze[x+w*y]===0)ctx.drawImage(mazeroad,0,0,16,16,16*x,16*y,16,16);
-            if(maze[x+w*y]===1)ctx.drawImage(mazewall,0,0,16,16,16*x,16*y,16,16);
-        }
-    }
-
-    //プレイヤー表示
-    ctx.drawImage( player.img,player.x,player.y);
-    //ゴール表示
-    ctx.drawImage( goal.img,goal.x,goal.y);
-
-    addEventListener("keydown",keydownfunc,false);
-    addEventListener("keyup",keyupfunc,false);
-
-    if(player.move === 0){            
-        if ( key.left === true ) {
-            var x = player.x/16;
-            var y = player.y/16;
-            x--;
-            if( maze[x+w*y] === 0 ){
-                player.move = 16;
-                key.push = 'left';
-            }
-		}
-		if ( key.up === true ) {
-			var x = player.x/16;
-            var y = player.y/16;
-            if( y !== 0 ){
-                y--;
-            if( maze[x+w*y] === 0 ){
-                player.move = 16;
-                key.push = 'up';
-            }
-            }
-		}
-		if ( key.right === true ) {
-			var x = player.x/16;
-            var y = player.y/16;
-            x++;
-            if( maze[x+w*y] === 0 ){ 
-                player.move = 16;
-                key.push = 'right';
-            }
-		}
-		if ( key.down === true ) {
-			var x = player.x/16;
-            var y = player.y/16;
-            if( y !== 34){
-                y++;
-            if( maze[x+w*y] === 0 ){
-                player.move = 16;
-                key.push = 'down';
-            }
-            }
-        }
-	}
-    //押しっぱにした時の処理
-    if(player.move > 0){
-        player.move -= 4;
-        if(key.push === 'left')player.x -= 4;
-        if(key.push === 'up')player.y -= 4;
-        if(key.push === 'right')player.x += 4;
-        if(key.push === 'down')player.y += 4;
-    }
-    //ゴール処理
-    if(player.x===goal.x&&player.y===goal.y){
-        alert("ゴール！！",window.location.reload());
-    }
-
-    requestAnimationFrame( main );
+  }
 }
 
-addEventListener('load',main(),false);
+const vector = {
+  up: [0, -1],
+  down: [0, 1],
+  left: [-1, 0],
+  right: [1, 0]
+};
 
-//キーボードが押されたときに呼ばれる関数
-function keydownfunc( event ){
-    var key_num = event.keyCode;
-    if( key_num == 37 )key.left = true;
-    if( key_num == 38 )key.up = true;
-    if( key_num == 39 )key.right = true;
-    if( key_num == 40 )key.down = true;
-    event.preventDefault();
-}
+const showMap = () => {
+  const borderWidth = size / 30 + "px";
+  for (let y = 1; y <= height; y++) {
+    for (let x = 1; x <= width; x++) {
+      const cell = map[y][x];
+      cell.element.style.borderWidth =
+        `${cell.wall.up ? borderWidth : 0} ` +
+        `${cell.wall.right ? borderWidth : 0} ` +
+        `${cell.wall.down ? borderWidth : 0} ` +
+        `${cell.wall.left ? borderWidth : 0}`;
+    }
+  }
+};
 
-//押されたキーボードが戻るときに呼ばれる関数
-function keyupfunc( event ){
-    var key_num = event.keyCode;
-    if( key_num == 37 )key.left = false;
-    if( key_num == 38 )key.up = false;
-    if( key_num == 39 )key.right = false;
-    if( key_num == 40 )key.down = false;
-}
+const update = () => {
+  for (let y = 1; y <= height; y++) {
+    for (let x = 1; x <= width; x++) {
+      const cell = map[y][x];
+      if (x === currentX && y === currentY) {
+        cell.element.style.backgroundColor = "#c88";
+      } else if (x === width && y === height) {
+        cell.element.style.backgroundColor = "#ff8";
+      } else {
+        cell.element.style.backgroundColor = "#8cc";
+      }
+    }
+  }
+};
+
+const digTarget = [[1, 1]];
+map[1][1].checked = true;
+const dig = async () => {
+  while (digTarget.length) {
+    const [x, y] = digTarget.pop();
+    if (x === width && y === height) {
+      continue;
+    }
+    const baseDirection = ["up", "down", "left", "right"];
+    const directionList = [];
+    while (baseDirection.length) {
+      const item = baseDirection.splice(
+        Math.trunc(Math.random() * baseDirection.length),
+        1
+      )[0];
+      directionList.push(item);
+    }
+    let action = false;
+    for (const direction of directionList) {
+      const [dx, dy] = vector[direction];
+      const tx = x + dx;
+      const ty = y + dy;
+      if (map[ty][tx].checked) {
+        continue;
+      }
+      map[ty][tx].checked = true;
+      digTarget.push([tx, ty]);
+      action = true;
+      switch (direction) {
+        case "up":
+          map[y][x].wall.up = false;
+          map[ty][tx].wall.down = false;
+          break;
+        case "down":
+          map[y][x].wall.down = false;
+          map[ty][tx].wall.up = false;
+          break;
+        case "left":
+          map[y][x].wall.left = false;
+          map[ty][tx].wall.right = false;
+          break;
+        case "right":
+          map[y][x].wall.right = false;
+          map[ty][tx].wall.left = false;
+          break;
+        default:
+          break;
+      }
+      break;
+    }
+    if (action) {
+      showMap();
+      await new Promise((r) => setTimeout(r, 1));
+      digTarget.unshift([x, y]);
+    }
+  }
+};
+
+let currentX = 1;
+let currentY = 1;
+const move = (direction) => {
+  if (gameover) {
+    return;
+  }
+  const cell = map[currentY][currentX];
+  if (cell.wall[direction]) {
+    return;
+  }
+  const [dx, dy] = vector[direction];
+  currentX += dx;
+  currentY += dy;
+  update();
+
+  if (currentX === width && currentY === height) {
+    gameover = true;
+  }
+};
+
+const init = () => {
+  const container = document.getElementById("container");
+  container.style.width = `${width * size}px`;
+  container.style.height = `${height * size}px`;
+
+  for (let y = 1; y <= height; y++) {
+    for (let x = 1; x <= width; x++) {
+      const div = document.createElement("div");
+      container.appendChild(div);
+      div.style.position = "absolute";
+      div.style.width = `${size}px`;
+      div.style.height = `${size}px`;
+      div.style.left = `${(x - 1) * size}px`;
+      div.style.top = `${(y - 1) * size}px`;
+      div.style.backgroundColor = "#8cc";
+      div.style.border = "1px solid #000";
+      div.style.boxSizing = "border-box";
+      map[y][x].element = div;
+    }
+  }
+  document.ondblclick = (e) => {
+    e.preventDefault();
+  };
+  document.getElementById("left").onpointerdown = (e) => {
+    e.preventDefault();
+    move("left");
+  };
+  document.getElementById("up").onpointerdown = (e) => {
+    e.preventDefault();
+    move("up");
+  };
+  document.getElementById("down").onpointerdown = (e) => {
+    e.preventDefault();
+    move("down");
+  };
+  document.getElementById("right").onpointerdown = (e) => {
+    e.preventDefault();
+    move("right");
+  };
+};
+
+window.onload = async () => {
+  gameover = true;
+  init();
+  await dig();
+  showMap();
+  update();
+
+  gameover = false;
+  const startTime = Date.now();
+  const tick = () => {
+    if (gameover) {
+      return;
+    }
+    const time = Date.now() - startTime;
+    document.getElementById("timer").textContent = (time / 1000).toFixed(2);
+    requestAnimationFrame(tick);
+  };
+  tick();
+};
 

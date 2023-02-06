@@ -7,14 +7,14 @@ html {
     text-align: center;
     color: #fff;
     margin-top: 100px;
-    /* font-family: serif; */
+    font-family: serif;
 }
 button {
     
     color: #009999;
     font-size: 60px;
-    /* font-family: serif; */
-    /* border-radius: 10%; */
+    font-family: serif;
+    border-radius: 10%;
     margin: 50px;
     border-color: #fff;
     width: 600px;
@@ -22,7 +22,7 @@ button {
 .level{
     color: #009999;
     margin-top: 200px;
-    /* border-radius: 10%; */
+    border-radius: 10%;
     
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@ button {
     text-align: center;
     width: 1fr;
     height: auto;
-    /* padding: 3%; */
+    padding: 3%;
     border: solid 3px #000000;
     border-radius: 25px;
     background-color: #fff;

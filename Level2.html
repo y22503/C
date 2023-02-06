@@ -1,16 +1,20 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="common1.css">
-    <title>産技短迷路</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <script src="main2.js"></script>
   </head>
   <body>
-    <h1>迷路</h1>
-      <p>左上のマスからスタート！右下のマスまで到達出来たらクリア！！</p>
-       <div class="btn_reload"><a onclick="window.location.reload(true);">ＲＥＳＥＴ</a></div>
-    <canvas id="canvas" >
-    </canvas>
-    <script src="main2.js"></script>
+    <div id="container" style="position: relative;"></div>
+    <div style="font-size: 50px; display: flex; align-items: center;">
+      <div><span id="left">⬅️</span></div>
+      <div><span id="up">⬆️</span><br /><span id="down">⬇️</span></div>
+      <div><span id="right">➡️</span></div>
+    </div>
+    <div style="font-size: 40px;" id="timer"></div>
   </body>
 </html>
