@@ -1,6 +1,15 @@
-const width = 15;
-const height = 15;
+// let start = () =>{
+//   let textbox1 = (document.getElementById("width"))
+//   let width = textbox1.value;
+//   width = Number(width);
+//   let textbox2 = (document.getElementById("height"));
+//   let height = textbox2.value;
+//   height = Number(height);
+//   console.log(width);
+//   console.log(height);
 const size = 20;
+let width = 35;
+let height = 35;
 
 let gameover = false;
 
@@ -37,7 +46,7 @@ const showMap = () => {
   const borderWidth = size / 30 + "px";
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
-      const cell = map[y][x];
+      let cell = map[y][x];
       cell.element.style.borderWidth =
         `${cell.wall.up ? borderWidth : 0} ` +
         `${cell.wall.right ? borderWidth : 0} ` +
@@ -47,43 +56,43 @@ const showMap = () => {
   }
 };
 
-const update = () => {
+let update = () => {
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
-      const cell = map[y][x];
+      let cell = map[y][x];
       if (x === currentX && y === currentY) {
         cell.element.style.backgroundColor = "#c88";
       } else if (x === width && y === height) {
-        cell.element.style.backgroundColor = "#ff8";
+        cell.element.style.backgroundColor = "#054";
       } else {
-        cell.element.style.backgroundColor = "#8cc";
+        cell.element.style.backgroundColor = "#ffc";
       }
     }
   }
 };
 
-const digTarget = [[1, 1]];
+let digTarget = [[1, 1]];
 map[1][1].checked = true;
-const dig = async () => {
+let dig = async () => {
   while (digTarget.length) {
-    const [x, y] = digTarget.pop();
+    let [x, y] = digTarget.pop();
     if (x === width && y === height) {
       continue;
     }
-    const baseDirection = ["up", "down", "left", "right"];
-    const directionList = [];
+    let baseDirection = ["up", "down", "left", "right"];
+    let directionList = [];
     while (baseDirection.length) {
-      const item = baseDirection.splice(
+      let item = baseDirection.splice(
         Math.trunc(Math.random() * baseDirection.length),
         1
       )[0];
       directionList.push(item);
     }
     let action = false;
-    for (const direction of directionList) {
-      const [dx, dy] = vector[direction];
-      const tx = x + dx;
-      const ty = y + dy;
+    for (let direction of directionList) {
+      let [dx, dy] = vector[direction];
+      let tx = x + dx;
+      let ty = y + dy;
       if (map[ty][tx].checked) {
         continue;
       }
@@ -122,15 +131,15 @@ const dig = async () => {
 
 let currentX = 1;
 let currentY = 1;
-const move = (direction) => {
+let move = (direction) => {
   if (gameover) {
     return;
   }
-  const cell = map[currentY][currentX];
+  let cell = map[currentY][currentX];
   if (cell.wall[direction]) {
     return;
   }
-  const [dx, dy] = vector[direction];
+  let [dx, dy] = vector[direction];
   currentX += dx;
   currentY += dy;
   update();
@@ -140,21 +149,23 @@ const move = (direction) => {
   }
 };
 
-const init = () => {
-  const container = document.getElementById("container");
+let init = () => {
+  let container = document.getElementById("container");
   container.style.width = `${width * size}px`;
   container.style.height = `${height * size}px`;
 
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
-      const div = document.createElement("div");
+      let div = document.createElement("div");
       container.appendChild(div);
+      // div.style.textAlign = "center"
+      // div.style.justifyContent = "center";
       div.style.position = "absolute";
       div.style.width = `${size}px`;
       div.style.height = `${size}px`;
       div.style.left = `${(x - 1) * size}px`;
       div.style.top = `${(y - 1) * size}px`;
-      div.style.backgroundColor = "#8cc";
+      div.style.backgroundColor = "#ffc";
       div.style.border = "1px solid #000";
       div.style.boxSizing = "border-box";
       map[y][x].element = div;
@@ -189,12 +200,12 @@ window.onload = async () => {
   update();
 
   gameover = false;
-  const startTime = Date.now();
-  const tick = () => {
+  let startTime = Date.now();
+  let tick = () => {
     if (gameover) {
       return;
     }
-    const time = Date.now() - startTime;
+    let time = Date.now() - startTime;
     document.getElementById("timer").textContent = (time / 1000).toFixed(2);
     requestAnimationFrame(tick);
   };
