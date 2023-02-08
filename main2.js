@@ -1,15 +1,15 @@
-// let start = () =>{
-//   let textbox1 = (document.getElementById("width"))
-//   let width = textbox1.value;
-//   width = Number(width);
-//   let textbox2 = (document.getElementById("height"));
-//   let height = textbox2.value;
-//   height = Number(height);
-//   console.log(width);
-//   console.log(height);
+let start = () =>{
+  let textbox1 = (document.getElementById("width"))
+  let width = textbox1.value;
+  width = Number(width);
+  let textbox2 = (document.getElementById("height"));
+  let height = textbox2.value;
+  height = Number(height);
+  console.log(width);
+  console.log(height);
 const size = 20;
-let width = 35;
-let height = 35;
+// let width = 35;
+// let height = 35;
 
 let gameover = false;
 
@@ -211,4 +211,4 @@ window.onload = async () => {
   };
   tick();
 };
-
+};
