@@ -1,15 +1,15 @@
-let start = () =>{
-  let textbox1 = (document.getElementById("width"))
-  let width = textbox1.value;
-  width = Number(width);
-  let textbox2 = (document.getElementById("height"));
-  let height = textbox2.value;
-  height = Number(height);
-  console.log(width);
-  console.log(height);
-const size = 20;
-// let width = 35;
-// let height = 35;
+// let start = () =>{
+  // let textbox1 = (document.querySelector("width"))
+  // let width = textbox1.value;
+  // width = Number(width);
+  // let textbox2 = (document.querySelector("height"));
+  // let height = textbox2.value;
+  // height = Number(height);
+  // console.log(width);
+  // console.log(height);
+const size = 25;
+let width = 20;
+let height = 20;
 
 let gameover = false;
 
@@ -65,7 +65,7 @@ let update = () => {
       } else if (x === width && y === height) {
         cell.element.style.backgroundColor = "#054";
       } else {
-        cell.element.style.backgroundColor = "#ffc";
+        cell.element.style.backgroundColor = "#fff";
       }
     }
   }
@@ -148,11 +148,13 @@ let move = (direction) => {
     gameover = true;
   }
 };
-
 let init = () => {
-  let container = document.getElementById("container");
+  // let box = document.querySelector()
+  let container = document.querySelector("#container");
   container.style.width = `${width * size}px`;
   container.style.height = `${height * size}px`;
+  container.style.margin = "0 5vw";
+  // container.style.marginTop = "5vh";
 
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
@@ -164,9 +166,9 @@ let init = () => {
       div.style.width = `${size}px`;
       div.style.height = `${size}px`;
       div.style.left = `${(x - 1) * size}px`;
-      div.style.top = `${(y - 1) * size}px`;
-      div.style.backgroundColor = "#ffc";
-      div.style.border = "1px solid #000";
+      div.style.top = `${(y-1) * size}px`;
+      div.style.backgroundColor = "#fff";
+      div.style.border = "1px solid #f0f";
       div.style.boxSizing = "border-box";
       map[y][x].element = div;
     }
@@ -174,19 +176,19 @@ let init = () => {
   document.ondblclick = (e) => {
     e.preventDefault();
   };
-  document.getElementById("left").onpointerdown = (e) => {
+  document.querySelector("#left").onpointerdown = (e) => {
     e.preventDefault();
     move("left");
   };
-  document.getElementById("up").onpointerdown = (e) => {
+  document.querySelector("#up").onpointerdown = (e) => {
     e.preventDefault();
     move("up");
   };
-  document.getElementById("down").onpointerdown = (e) => {
+  document.querySelector("#down").onpointerdown = (e) => {
     e.preventDefault();
     move("down");
   };
-  document.getElementById("right").onpointerdown = (e) => {
+  document.querySelector("#right").onpointerdown = (e) => {
     e.preventDefault();
     move("right");
   };
@@ -206,9 +208,9 @@ window.onload = async () => {
       return;
     }
     let time = Date.now() - startTime;
-    document.getElementById("timer").textContent = (time / 1000).toFixed(2);
+    document.querySelector("#timer").textContent = (time / 1000).toFixed(2);
     requestAnimationFrame(tick);
   };
   tick();
 };
-};
+// };

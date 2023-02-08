@@ -41,16 +41,24 @@ button {
     background-color: #fff;
   }
   #aasdfad{
-    font-size: 50px;
+    font-size: 80px;
+    margin-top: 10vh;
     display: flex;
     align-items: center;
+    justify-content: center;
+}
+.box{
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
 }
 #container{
     position: relative;
 }
 #timer{
-    margin-top: 10%;
+    margin-top: 5vh;
     font-size: 40px;
     text-align: center;
+    margin: auto 5vw;
 }
