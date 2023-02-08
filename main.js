@@ -1,20 +1,20 @@
-var canvas = document.getElementById("waku");
-var button = document.getElementById('button');
-  var textbox1 = document.getElementById("width");
-  var textbox2 = document.getElementById("height");
-  button.addEventListener("click", function(){  
-  var width = textbox1.value;
-  var height = textbox2.value;
-  var width = Number( width );
-  var height = Number( height );
+// var canvas = document.getElementById("waku");
+// var button = document.getElementById('button');
+//   var textbox1 = document.getElementById("width");
+//   var textbox2 = document.getElementById("height");
+//   button.addEventListener("click", function(){  
+//   var width = textbox1.value;
+//   var height = textbox2.value;
+//   var width = Number( width );
+//   var height = Number( height );
   
-  console.log(typeof width);
-  console.log(typeof height);
-const size = 20;
+//   console.log(typeof width);
+//   console.log(typeof height);
  
-} );
-// let width = 15;
-// let height = 15;
+// } );
+let width = 5;
+let height = 5;
+const size = 20;
 
 let gameover = false;
 
@@ -66,14 +66,15 @@ let update = () => {
     for (let x = 1; x <= width; x++) {
       let cell = map[y][x];
       if (x === currentX && y === currentY) {
-        cell.element.style.backgroundColor = "#c88";
+        cell.element.style.backgroundColor = "#ce1";
       } else if (x === width && y === height) {
         cell.element.style.backgroundColor = "#054";
       } else {
-        cell.element.style.backgroundColor = "#ffc";
+        cell.element.style.backgroundColor = "#fff";
       }
     }
   }
+  
 };
 
 let digTarget = [[1, 1]];
@@ -130,6 +131,7 @@ let dig = async () => {
       showMap();
       await new Promise((r) => setTimeout(r, 1));
       digTarget.unshift([x, y]);
+      
     }
   }
 };
@@ -151,6 +153,7 @@ let move = (direction) => {
 
   if (currentX === width && currentY === height) {
     gameover = true;
+    alert("ゴール！！");
   }
 };
 
@@ -170,8 +173,8 @@ let init = () => {
       div.style.height = `${size}px`;
       div.style.left = `${(x - 1) * size}px`;
       div.style.top = `${(y - 1) * size}px`;
-      div.style.backgroundColor = "#ffc";
-      div.style.border = "1px solid #000";
+      div.style.backgroundColor = "#fff";
+      div.style.border = "1px dotted #000";
       div.style.boxSizing = "border-box";
       map[y][x].element = div;
     }
@@ -214,6 +217,7 @@ window.onload = async () => {
     document.getElementById("timer").textContent = (time / 1000).toFixed(2);
     requestAnimationFrame(tick);
   };
+  
   tick();
 };
 
