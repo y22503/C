@@ -1,15 +1,11 @@
 // let start = () =>{
-  // let textbox1 = (document.querySelector("width"))
-  // let width = textbox1.value;
-  // width = Number(width);
-  // let textbox2 = (document.querySelector("height"));
-  // let height = textbox2.value;
-  // height = Number(height);
-  // console.log(width);
-  // console.log(height);
+//   let width = document.querySelector("width");
+//   let height = document.querySelector("height");
+//   console.log(width);
+//   console.log(height);
 const size = 25;
-let width = 20;
-let height = 20;
+let width = 10;
+let height = 10;
 
 let gameover = false;
 
@@ -42,7 +38,7 @@ const vector = {
   right: [1, 0]
 };
 
-const showMap = () => {
+function showMap (){
   const borderWidth = size / 30 + "px";
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
