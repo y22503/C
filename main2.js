@@ -146,6 +146,8 @@ let move = (direction) => {
 
   if (currentX === width && currentY === height) {
     gameover = true;
+    location.reload();
+    alert("ゴール！！");
   }
 };
 let init = () => {
