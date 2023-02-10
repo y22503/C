@@ -11,7 +11,7 @@ const size = 25;
 let width = 20;
 let height = 20;
 
-let gameover = false;
+let gameover = 0;
 
 const map = [];
 //番兵を使って要素の終端を必ず失敗にする
@@ -20,18 +20,18 @@ for (let y = 0; y < height + 2; y++) {
   for (let x = 0; x < width + 2; x++) {
     //要素の終端（番兵）
     if (x === 0 || y === 0 || x === width + 1 || y === height + 1) {
-      //番兵をcheckkk: trueにし、外周を判断する
+      //番兵をkanryou: 1にし、外周を判断する
       map[y][x] = {
-        checkkk: true
+        kanryou: 1
       };
     } else {
       map[y][x] = {
-        checkkk: false,
-        wall: {
-          up: true,
-          down: true,
-          left: true,
-          right: true
+        kanryou: 0,
+        kabe: {
+          up: 1,
+          down: 1,
+          left: 1,
+          right: 1
         }
       };
     }
@@ -51,10 +51,10 @@ const showMap = () => {
     for (let x = 1; x <= width; x++) {
       let cell = map[y][x];
       cell.element.style.borderWidth =
-        `${cell.wall.up ? borderWidth : 0} ` +
-        `${cell.wall.right ? borderWidth : 0} ` +
-        `${cell.wall.down ? borderWidth : 0} ` +
-        `${cell.wall.left ? borderWidth : 0}`;
+        `${cell.kabe.up ? borderWidth : 0} ` +
+        `${cell.kabe.right ? borderWidth : 0} ` +
+        `${cell.kabe.down ? borderWidth : 0} ` +
+        `${cell.kabe.left ? borderWidth : 0}`;
     }
   }
 };
@@ -75,7 +75,7 @@ let update = () => {
 };
 
 let digTarget = [[1, 1]];
-map[1][1].checkkk = true;
+map[1][1].kanryou = 1;
 let dig = async () => {
   while (digTarget.length) {
     let [x, y] = digTarget.pop();
@@ -91,33 +91,33 @@ let dig = async () => {
       )[0];
       directionList.push(item);
     }
-    let action = false;
+    let action = 0;
     for (let direction of directionList) {
       let [dx, dy] = vector[direction];
       let tx = x + dx;
       let ty = y + dy;
-      if (map[ty][tx].checkkk) {
+      if (map[ty][tx].kanryou) {
         continue;
       }
-      map[ty][tx].checkkk = true;
+      map[ty][tx].kanryou = 1;
       digTarget.push([tx, ty]);
-      action = true;
+      action = 1;
       switch (direction) {
         case "up":
-          map[y][x].wall.up = false;
-          map[ty][tx].wall.down = false;
+          map[y][x].kabe.up = 0;
+          map[ty][tx].kabe.down = 0;
           break;
         case "down":
-          map[y][x].wall.down = false;
-          map[ty][tx].wall.up = false;
+          map[y][x].kabe.down = 0;
+          map[ty][tx].kabe.up = 0;
           break;
         case "left":
-          map[y][x].wall.left = false;
-          map[ty][tx].wall.right = false;
+          map[y][x].kabe.left = 0;
+          map[ty][tx].kabe.right = 0;
           break;
         case "right":
-          map[y][x].wall.right = false;
-          map[ty][tx].wall.left = false;
+          map[y][x].kabe.right = 0;
+          map[ty][tx].kabe.left = 0;
           break;
         default:
           break;
@@ -139,7 +139,7 @@ let move = (direction) => {
     return;
   }
   let cell = map[currentY][currentX];
-  if (cell.wall[direction]) {
+  if (cell.kabe[direction]) {
     return;
   }
   let [dx, dy] = vector[direction];
@@ -148,7 +148,7 @@ let move = (direction) => {
   update();
 
   if (currentX === width && currentY === height) {
-    gameover = true
+    gameover = 1
     location.reload();
     alert("ゴール！！");
   }
@@ -202,13 +202,13 @@ let init = () => {
 };
 
 window.onload = async () => {
-  gameover = true;
+  gameover = 1;
   init();
   await dig();
   showMap();
   update();
 
-  gameover = false;
+  gameover = 0;
   let startTime = Date.now();
   let tick = () => {
     if (gameover) {
