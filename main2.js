@@ -148,7 +148,9 @@ let move = (direction) => {
   update();
 
   if (currentX === width && currentY === height) {
-    gameover = true;
+    gameover = true
+    location.reload();
+    alert("ゴール！！");
   }
 };
 //迷路を入れるcontainerの定義
