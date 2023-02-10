@@ -1,25 +1,32 @@
 // let start = () =>{
-//   let width = document.querySelector("width");
-//   let height = document.querySelector("height");
-//   console.log(width);
-//   console.log(height);
+  // let textbox1 = (document.querySelector("width"))
+  // let width = textbox1.value;
+  // width = Number(width);
+  // let textbox2 = (document.querySelector("height"));
+  // let height = textbox2.value;
+  // height = Number(height);
+  // console.log(width);
+  // console.log(height);
 const size = 25;
-let width = 10;
-let height = 10;
+let width = 20;
+let height = 20;
 
 let gameover = false;
 
 const map = [];
+//番兵を使って要素の終端を必ず失敗にする
 for (let y = 0; y < height + 2; y++) {
   map[y] = [];
   for (let x = 0; x < width + 2; x++) {
+    //要素の終端（番兵）
     if (x === 0 || y === 0 || x === width + 1 || y === height + 1) {
+      //番兵をcheckkk: trueにし、外周を判断する
       map[y][x] = {
-        checked: true
+        checkkk: true
       };
     } else {
       map[y][x] = {
-        checked: false,
+        checkkk: false,
         wall: {
           up: true,
           down: true,
@@ -38,7 +45,7 @@ const vector = {
   right: [1, 0]
 };
 
-function showMap (){
+const showMap = () => {
   const borderWidth = size / 30 + "px";
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
@@ -68,7 +75,7 @@ let update = () => {
 };
 
 let digTarget = [[1, 1]];
-map[1][1].checked = true;
+map[1][1].checkkk = true;
 let dig = async () => {
   while (digTarget.length) {
     let [x, y] = digTarget.pop();
@@ -89,10 +96,10 @@ let dig = async () => {
       let [dx, dy] = vector[direction];
       let tx = x + dx;
       let ty = y + dy;
-      if (map[ty][tx].checked) {
+      if (map[ty][tx].checkkk) {
         continue;
       }
-      map[ty][tx].checked = true;
+      map[ty][tx].checkkk = true;
       digTarget.push([tx, ty]);
       action = true;
       switch (direction) {
@@ -142,28 +149,28 @@ let move = (direction) => {
 
   if (currentX === width && currentY === height) {
     gameover = true;
-    location.reload();
-    alert("ゴール！！");
   }
 };
+//迷路を入れるcontainerの定義
 let init = () => {
-  // let box = document.querySelector()
   let container = document.querySelector("#container");
   container.style.width = `${width * size}px`;
   container.style.height = `${height * size}px`;
   container.style.margin = "0 5vw";
   // container.style.marginTop = "5vh";
 
+  //終端（番兵）を除いて迷路のマスを定義する
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
       let div = document.createElement("div");
+      //container(親)要素の中にdiv(マス)を追加する
       container.appendChild(div);
       // div.style.textAlign = "center"
       // div.style.justifyContent = "center";
       div.style.position = "absolute";
       div.style.width = `${size}px`;
       div.style.height = `${size}px`;
-      div.style.left = `${(x - 1) * size}px`;
+      div.style.left = `${(x-1) * size}px`;
       div.style.top = `${(y-1) * size}px`;
       div.style.backgroundColor = "#fff";
       div.style.border = "1px solid #f0f";
