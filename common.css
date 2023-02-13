@@ -18,6 +18,9 @@ html {
     background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
     background-position: -4px -4px, -4px -4px, -2px -2px, -2px -2px;
 }
+.bg3 {
+    background-color: #ffe9a7;
+}
 .meiro {
     font-size: 100px;
     text-align: center;
@@ -73,4 +76,9 @@ button {
 }
 #aasdfad {
     color: #009999;
+}
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP');
+
+#left{
+    font-family: 'Noto Sans JP', sans-serif;
 }

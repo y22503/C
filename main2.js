@@ -8,8 +8,8 @@
 // console.log(width);
 // console.log(height);
 const size = 25;
-let width = 10;
-let height = 10;
+let width = 70;
+let height = 21;
 
 let gameover = 0;
 
@@ -131,7 +131,7 @@ let dig = async () => {
     if (action) {
       showMap();
       //過程が見えるようにする
-      await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 1));
       digTarget.unshift([x, y]);
     }
   }
