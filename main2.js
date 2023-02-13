@@ -90,7 +90,7 @@ let dig = async () => {
     let action = 0;
     //directionにdirectionListの要素を入れながら
     for (let direction of directionList) {
-         // console.log(direction);
+      // console.log(direction);
       let [dx, dy] = vector[direction];
       // console.log(dx,dy);
 
@@ -130,7 +130,8 @@ let dig = async () => {
     }
     if (action) {
       showMap();
-      await new Promise((resolve) => setTimeout(resolve,100));
+      //過程が見えるようにする
+      await new Promise((resolve) => setTimeout(resolve, 100));
       digTarget.unshift([x, y]);
     }
   }
@@ -139,6 +140,7 @@ let dig = async () => {
 let currentX = 1;
 let currentY = 1;
 let move = (direction) => {
+  console.log(direction);
   if (gameover) {
     return;
   }
@@ -184,26 +186,43 @@ let init = () => {
       map[y][x].element = div;
     }
   }
-  document.ondblclick = (e) => {
-    e.preventDefault();
-  };
-  document.querySelector("#left").onpointerdown = (e) => {
-    e.preventDefault();
-    move("left");
-  };
-  document.querySelector("#up").onpointerdown = (e) => {
-    e.preventDefault();
-    move("up");
-  };
-  document.querySelector("#down").onpointerdown = (e) => {
-    e.preventDefault();
-    move("down");
-  };
-  document.querySelector("#right").onpointerdown = (e) => {
-    e.preventDefault();
-    move("right");
-  };
 };
+// document.ondblclick = (e) => {
+//   e.preventDefault();
+// };
+// 方向ボタンがクリックされたときの処理
+left = () => {
+  move("left");
+}
+right = () => {
+  move("right");
+}
+up = () => {
+  move("up");
+}
+down = () => {
+  move("down");
+};
+// 方向キーが入力されたときの処理
+document.addEventListener('keydown', (e) => {
+  const code = e.code;
+  switch (code) {
+    case "ArrowUp":
+      move("up");
+      break;
+    case "ArrowDown":
+      move("down");
+      break;
+    case "ArrowLeft":
+      move("left");
+      break;
+    case "ArrowRight":
+      move("right");
+      break;
+  }
+});
+
+
 
 window.onload = async () => {
   gameover = 1;
