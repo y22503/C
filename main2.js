@@ -1,4 +1,5 @@
 // let start = () =>{
+<<<<<<< Updated upstream
   // let textbox1 = (document.querySelector("width"))
   // let width = textbox1.value;
   // width = Number(width);
@@ -7,6 +8,12 @@
   // height = Number(height);
   // console.log(width);
   // console.log(height);
+=======
+//   let width = (document.querySelector("#width")).value;
+//   let height = (document.querySelector("#height")).value;
+//   console.log(width);
+//   console.log(height);
+>>>>>>> Stashed changes
 const size = 25;
 let width = 20;
 let height = 20;
@@ -180,9 +187,9 @@ let init = () => {
       map[y][x].element = div;
     }
   }
-  document.ondblclick = (e) => {
-    e.preventDefault();
-  };
+  // document.ondblclick = (e) => {
+  //   e.preventDefault();
+  // };
   document.querySelector("#left").onpointerdown = (e) => {
     e.preventDefault();
     move("left");
@@ -214,6 +221,7 @@ window.onload = async () => {
     if (gameover) {
       return;
     }
+    //タイマー
     let time = Date.now() - startTime;
     document.querySelector("#timer").textContent = (time / 1000).toFixed(2);
     requestAnimationFrame(tick);
