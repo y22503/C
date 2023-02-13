@@ -1,24 +1,30 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Static Template</title>
-    <link rel="stylesheet" href="common.css">
-    <script src="main.js"></script>
-  </head>
-  <body>
-    <a href="index.html">ホーム</a>
-    <input type="text" id="width" value="15">X<input type="text" id="height" value="15">
-    <input type="button" id = "button" value="生成">
+<html lang="ja" class="bg3">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Static Template</title>
+  <link rel="stylesheet" href="common.css">
+  <script src="main.js"></script>
+</head>
+
+<body>
+  <a href="index.html" id="level">Home</a>
+  <input type="number" id="width" value="15">X<input type="number" id="height" value="15">
+  <input type="button" id="button" value="生成">
+  <h1>1位</h1>
+  <div class="box">
     <div id="container"></div>
-    <div id ="aasdfad">
-      <div><span id="left">←</span></div>
-      <div><span id="up">↑</span><br /><span id="down">↓</span></div>
-      <div><span id="right">→</span></div>
-    </div>
-    
-    <div id="timer"></div>
-  </body>
+  </div>
+  <div id="timer"></div>
+  <div id="aasdfad">
+    <div class="le"><span id="left" onclick="left()">←</span></div>
+    <div><span id="up" onclick="up()">↑</span><br><span id="down" onclick="down()">↓</span></div>
+    <div><span id="right" onclick="right()">→</span></div>
+  </div>
+
+</body>
+
 </html>
