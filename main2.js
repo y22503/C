@@ -1,15 +1,15 @@
 // let start = () =>{
-  // let textbox1 = (document.querySelector("width"))
-  // let width = textbox1.value;
-  // width = Number(width);
-  // let textbox2 = (document.querySelector("height"));
-  // let height = textbox2.value;
-  // height = Number(height);
-  // console.log(width);
-  // console.log(height);
+// let textbox1 = (document.querySelector("width"))
+// let width = textbox1.value;
+// width = Number(width);
+// let textbox2 = (document.querySelector("height"));
+// let height = textbox2.value;
+// height = Number(height);
+// console.log(width);
+// console.log(height);
 const size = 25;
-let width = 20;
-let height = 20;
+let width = 10;
+let height = 10;
 
 let gameover = 0;
 
@@ -27,34 +27,24 @@ for (let y = 0; y < height + 2; y++) {
     } else {
       map[y][x] = {
         kanryou: 0,
-        kabe: {
-          up: 1,
-          down: 1,
-          left: 1,
-          right: 1
-        }
+        //連想配列でキーと値を紐づける
+        kabe: { up: 1, down: 1, left: 1, right: 1 }
       };
     }
   }
 }
 
-const vector = {
-  up: [0, -1],
-  down: [0, 1],
-  left: [-1, 0],
-  right: [1, 0]
-};
 
 const showMap = () => {
   const borderWidth = size / 30 + "px";
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
-      let cell = map[y][x];
-      cell.element.style.borderWidth =
-        `${cell.kabe.up ? borderWidth : 0} ` +
-        `${cell.kabe.right ? borderWidth : 0} ` +
-        `${cell.kabe.down ? borderWidth : 0} ` +
-        `${cell.kabe.left ? borderWidth : 0}`;
+      let masu = map[y][x];
+      masu.element.style.borderWidth =
+        `${masu.kabe.up ? borderWidth : 0} ` +
+        `${masu.kabe.right ? borderWidth : 0} ` +
+        `${masu.kabe.down ? borderWidth : 0} ` +
+        `${masu.kabe.left ? borderWidth : 0}`;
     }
   }
 };
@@ -62,46 +52,60 @@ const showMap = () => {
 let update = () => {
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
-      let cell = map[y][x];
-      if (x === currentX && y === currentY) {
-        cell.element.style.backgroundColor = "#c88";
+      let masu = map[y][x];
+      if (x == currentX && y == currentY) {
+        masu.element.style.backgroundColor = "#c88";
       } else if (x === width && y === height) {
-        cell.element.style.backgroundColor = "#054";
+        masu.element.style.backgroundColor = "#054";
       } else {
-        cell.element.style.backgroundColor = "#fff";
+        masu.element.style.backgroundColor = "#fff";
       }
     }
   }
 };
+//baseDirectionの文字列に対応するベクトルを定義する
+const vector = { "up": [0, -1], "down": [0, 1], "left": [-1, 0], "right": [1, 0] };
 
+//スタート位置を設定する
 let digTarget = [[1, 1]];
 map[1][1].kanryou = 1;
 let dig = async () => {
   while (digTarget.length) {
     let [x, y] = digTarget.pop();
-    if (x === width && y === height) {
+    //端についたら初めに戻る
+    if (x == width && y == height) {
       continue;
     }
     let baseDirection = ["up", "down", "left", "right"];
     let directionList = [];
+    //bsseDirectionからランダムで要素をとってdirectionListに追加する
     while (baseDirection.length) {
+      // directionList[0] = baseDirection.splice(
+      //   Math.trunc(Math.random() * baseDirection.length), 1)[0];
+
       let item = baseDirection.splice(
-        Math.trunc(Math.random() * baseDirection.length),
-        1
-      )[0];
+        Math.trunc(Math.random() * baseDirection.length), 1)[0];
       directionList.push(item);
     }
     let action = 0;
+    //directionにdirectionListの要素を入れながら
     for (let direction of directionList) {
+         // console.log(direction);
       let [dx, dy] = vector[direction];
+      // console.log(dx,dy);
+
+      //開始位置からどの方向に進むか
       let tx = x + dx;
       let ty = y + dy;
+      //既に壁が壊されていたら初めに戻る
       if (map[ty][tx].kanryou) {
         continue;
       }
       map[ty][tx].kanryou = 1;
+      //スタート位置を現在の位置にする
       digTarget.push([tx, ty]);
       action = 1;
+      //borderがマスごとにあり、壁が二重になっているので二つずつ壊す
       switch (direction) {
         case "up":
           map[y][x].kabe.up = 0;
@@ -119,14 +123,14 @@ let dig = async () => {
           map[y][x].kabe.right = 0;
           map[ty][tx].kabe.left = 0;
           break;
-        default:
-          break;
+        // default:
+        //   break;
       }
       break;
     }
     if (action) {
       showMap();
-      await new Promise((r) => setTimeout(r, 1));
+      await new Promise((resolve) => setTimeout(resolve,100));
       digTarget.unshift([x, y]);
     }
   }
@@ -138,8 +142,8 @@ let move = (direction) => {
   if (gameover) {
     return;
   }
-  let cell = map[currentY][currentX];
-  if (cell.kabe[direction]) {
+  let masu = map[currentY][currentX];
+  if (masu.kabe[direction]) {
     return;
   }
   let [dx, dy] = vector[direction];
@@ -172,8 +176,8 @@ let init = () => {
       div.style.position = "absolute";
       div.style.width = `${size}px`;
       div.style.height = `${size}px`;
-      div.style.left = `${(x-1) * size}px`;
-      div.style.top = `${(y-1) * size}px`;
+      div.style.left = `${(x - 1) * size}px`;
+      div.style.top = `${(y - 1) * size}px`;
       div.style.backgroundColor = "#fff";
       div.style.border = "1px solid #f0f";
       div.style.boxSizing = "border-box";
@@ -204,7 +208,7 @@ let init = () => {
 window.onload = async () => {
   gameover = 1;
   init();
-  await dig();
+  dig();
   showMap();
   update();
 
