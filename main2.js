@@ -114,7 +114,7 @@ let dig = async () => {
         case "down":
           map[y][x].kabe.down = 0;
           map[ty][tx].kabe.up = 0;
-          break;
+          break;bfgf
         case "left":
           map[y][x].kabe.left = 0;
           map[ty][tx].kabe.right = 0;
