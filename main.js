@@ -12,9 +12,9 @@
 //   console.log(typeof height);
  
 // } );
-const size = 50;
-let width = 35;
-let height = 10;
+const size = 80;
+let width = 15;
+let height = 5;
 
 let gameover = 0;
 
@@ -196,18 +196,7 @@ let init = () => {
 //   e.preventDefault();
 // };
 // 方向ボタンがクリックされたときの処理
-left = () => {
-  move("left");
-}
-right = () => {
-  move("right");
-}
-up = () => {
-  move("up");
-}
-down = () => {
-  move("down");
-};
+
 // 方向キーが入力されたときの処理
 document.addEventListener('keydown', (e) => {
   const code = e.code;

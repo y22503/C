@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja" class="bg3">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Static Template</title>
+  <link rel="stylesheet" href="common.css">
+  <script src="mainfree.js"></script>
+</head>
+
+<body>
+  <header>
+    <a href="index.html" id="level">Home</a>
+  </header>
+  
+  <input id="width" type="number" value="" placeholder="幅のサイズを入力"> <input id="height" type="number" value="" placeholder="高さのサイズを入力"> <input id="size" type="number"value="" placeholder="表示サイズを入力"> <input type="button" value ="リセット" onclick="reset()">
+  <input type="button" id="button" value="生成" onclick="start()">
+  <div class="box">
+    
+    <div id="container"></div>
+  </div>
+  <div id="timer"></div>
+  
+  </div>
+
+</body>
+
+</html>
