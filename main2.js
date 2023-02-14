@@ -1,16 +1,15 @@
-// let start = () =>{
-  // let textbox1 = (document.querySelector("width"))
-  // let width = textbox1.value;
-  // width = Number(width);
-  // let textbox2 = (document.querySelector("height"));
-  // let height = textbox2.value;
-  // height = Number(height);
-  // console.log(width);
-  // console.log(height);
-  
+start = () =>{
+let textbox1 = (document.querySelector("width"))
+width = Number(textbox1.value);
+let textbox2 = (document.querySelector("height"));
+height = Number(textbox2.value);
+console.log(width);
+console.log(height);
 const size = 25;
-let width = 70;
-let height = 21;
+}
+// const size = 25;
+// let width = 20;
+// let height = 20;
 
 let gameover = 0;
 
@@ -35,29 +34,28 @@ for (let y = 0; y < height + 2; y++) {
   }
 }
 
-
+//壁を表示する関数
 const showMap = () => {
   const borderWidth = size / 30 + "px";
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
       let masu = map[y][x];
-      masu.element.style.borderWidth =
-        `${masu.kabe.up ? borderWidth : 0} ` +
-        `${masu.kabe.right ? borderWidth : 0} ` +
-        `${masu.kabe.down ? borderWidth : 0} ` +
-        `${masu.kabe.left ? borderWidth : 0}`;
+      //壁があるところはborderを適用させる
+      masu.element.style.borderWidth = `${masu.kabe.up ? borderWidth : 0} ` + `${masu.kabe.right ? borderWidth : 0} ` + `${masu.kabe.down ? borderWidth : 0} ` + `${masu.kabe.left ? borderWidth : 0}`;
     }
   }
 };
-
+//自分を表示する関数
 let update = () => {
   for (let y = 1; y <= height; y++) {
     for (let x = 1; x <= width; x++) {
       let masu = map[y][x];
+      // 自分の場所は色を変える
       if (x == currentX && y == currentY) {
-        masu.element.style.backgroundColor = "#c88";
+        masu.element.style.backgroundColor = "#0f8";
+        // ゴールの色を変える
       } else if (x === width && y === height) {
-        masu.element.style.backgroundColor = "#054";
+        masu.element.style.backgroundColor = "#099";
       } else {
         masu.element.style.backgroundColor = "#fff";
       }
@@ -73,7 +71,7 @@ map[1][1].kanryou = 1;
 let dig = async () => {
   while (digTarget.length) {
     let [x, y] = digTarget.pop();
-    //端についたら初めに戻る
+    //ゴールまで掘ったら初めに戻る
     if (x == width && y == height) {
       continue;
     }
@@ -142,10 +140,13 @@ let currentX = 1;
 let currentY = 1;
 let move = (direction) => {
   console.log(direction);
+  //ゴールしたら処理を抜ける
   if (gameover) {
     return;
   }
+  //自分のスタート位置
   let masu = map[currentY][currentX];
+  //壁があったら処理を抜ける
   if (masu.kabe[direction]) {
     return;
   }
@@ -154,10 +155,11 @@ let move = (direction) => {
   currentY += dy;
   update();
 
+  //ゴールした時の処理
   if (currentX === width && currentY === height) {
     gameover = 1
     location.reload();
-    alert("ゴール！！");
+    // alert("ゴール！！");
   }
 };
 //迷路を入れるcontainerの定義
@@ -187,25 +189,6 @@ let init = () => {
       map[y][x].element = div;
     }
   }
-  // document.ondblclick = (e) => {
-  //   e.preventDefault();
-  // };
-  document.querySelector("#left").onpointerdown = (e) => {
-    e.preventDefault();
-    move("left");
-  };
-  document.querySelector("#up").onpointerdown = (e) => {
-    e.preventDefault();
-    move("up");
-  };
-  document.querySelector("#down").onpointerdown = (e) => {
-    e.preventDefault();
-    move("down");
-  };
-  document.querySelector("#right").onpointerdown = (e) => {
-    e.preventDefault();
-    move("right");
-  };
 
 };
 // document.ondblclick = (e) => {
@@ -245,7 +228,7 @@ document.addEventListener('keydown', (e) => {
 
 
 
-window.onload = async () => {
+window.onload =  () => {
   gameover = 1;
   init();
   dig();
@@ -255,9 +238,6 @@ window.onload = async () => {
   gameover = 0;
   let startTime = Date.now();
   let tick = () => {
-    if (gameover) {
-      return;
-    }
     //タイマー
     let time = Date.now() - startTime;
     document.querySelector("#timer").textContent = (time / 1000).toFixed(2);
