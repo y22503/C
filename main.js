@@ -1,18 +1,4 @@
-// var canvas = document.getElementById("waku");
-// var button = document.getElementById('button');
-//   var textbox1 = document.getElementById("width");
-//   var textbox2 = document.getElementById("height");
-//   button.addEventListener("click", function(){  
-//   var width = textbox1.value;
-//   var height = textbox2.value;
-//   var width = Number( width );
-//   var height = Number( height );
-  
-//   console.log(typeof width);
-//   console.log(typeof height);
- 
-// } );
-const size = 80;
+const size = 55;
 let width = 15;
 let height = 5;
 
@@ -85,9 +71,6 @@ let dig = async () => {
     let directionList = [];
     //bsseDirectionからランダムで要素をとってdirectionListに追加する
     while (baseDirection.length) {
-      // directionList[0] = baseDirection.splice(
-      //   Math.trunc(Math.random() * baseDirection.length), 1)[0];
-
       let item = baseDirection.splice(
         Math.trunc(Math.random() * baseDirection.length), 1)[0];
       directionList.push(item);
@@ -95,9 +78,7 @@ let dig = async () => {
     let action = 0;
     //directionにdirectionListの要素を入れながら
     for (let direction of directionList) {
-      // console.log(direction);
       let [dx, dy] = vector[direction];
-      // console.log(dx,dy);
 
       //開始位置からどの方向に進むか
       let tx = x + dx;
@@ -128,15 +109,14 @@ let dig = async () => {
           map[y][x].kabe.right = 0;
           map[ty][tx].kabe.left = 0;
           break;
-        // default:
-        //   break;
+        default:
+          break;
       }
       break;
     }
     if (action) {
       showMap();
       //過程が見えるようにする
-      await new Promise((resolve) => setTimeout(resolve, 1));
       digTarget.unshift([x, y]);
     }
   }
@@ -170,7 +150,6 @@ let init = () => {
   container.style.width = `${width * size}px`;
   container.style.height = `${height * size}px`;
   container.style.margin = "0 5vw";
-  // container.style.marginTop = "5vh";
 
   //終端（番兵）を除いて迷路のマスを定義する
   for (let y = 1; y <= height; y++) {
@@ -178,8 +157,6 @@ let init = () => {
       let div = document.createElement("div");
       //container(親)要素の中にdiv(マス)を追加する
       container.appendChild(div);
-      // div.style.textAlign = "center"
-      // div.style.justifyContent = "center";
       div.style.position = "absolute";
       div.style.width = `${size}px`;
       div.style.height = `${size}px`;
@@ -192,9 +169,6 @@ let init = () => {
     }
   }
 };
-// document.ondblclick = (e) => {
-//   e.preventDefault();
-// };
 // 方向ボタンがクリックされたときの処理
 
 // 方向キーが入力されたときの処理
@@ -218,7 +192,7 @@ document.addEventListener('keydown', (e) => {
 
 
 
-window.onload = async () => {
+window.onload = () => {
   gameover = 1;
   init();
   dig();
