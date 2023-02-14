@@ -1,15 +1,18 @@
+// const size = 25;
+// let width = 10;
+// let height = 20;
 start = () =>{
-let textbox1 = (document.querySelector("width"))
-width = Number(textbox1.value);
-let textbox2 = (document.querySelector("height"));
-height = Number(textbox2.value);
+let width = parseInt(document.querySelector("#width").value);
+let height = parseInt(document.querySelector("#height").value);
+let size = parseInt(document.querySelector("#size").value);
+reset = () =>{
+  location.reload();
+}
+
 console.log(width);
 console.log(height);
-const size = 25;
-}
-// const size = 25;
-// let width = 20;
-// let height = 20;
+
+
 
 let gameover = 0;
 
@@ -139,7 +142,6 @@ let dig = async () => {
 let currentX = 1;
 let currentY = 1;
 let move = (direction) => {
-  console.log(direction);
   //ゴールしたら処理を抜ける
   if (gameover) {
     return;
@@ -195,18 +197,7 @@ let init = () => {
 //   e.preventDefault();
 // };
 // 方向ボタンがクリックされたときの処理
-left = () => {
-  move("left");
-}
-right = () => {
-  move("right");
-}
-up = () => {
-  move("up");
-}
-down = () => {
-  move("down");
-};
+
 // 方向キーが入力されたときの処理
 document.addEventListener('keydown', (e) => {
   const code = e.code;
@@ -228,7 +219,6 @@ document.addEventListener('keydown', (e) => {
 
 
 
-window.onload =  () => {
   gameover = 1;
   init();
   dig();
@@ -242,7 +232,12 @@ window.onload =  () => {
     let time = Date.now() - startTime;
     document.querySelector("#timer").textContent = (time / 1000).toFixed(2);
     requestAnimationFrame(tick);
+    if(gameover){
+      let timeout = time;
+      clearTimeout(time);
+      console.log(timeout);
+    }
+    
   };
   tick();
 };
-// };
