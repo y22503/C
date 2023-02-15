@@ -152,8 +152,23 @@ start = () =>{
       //ゴールした時の処理
       if (currentX === width && currentY === height) {
         gameover = 1
-        location.reload();
-        alert("ゴール！！");
+        confetti();
+        if(localStorage == null){
+          localStorage.setItem("time", time/1000)
+        }
+        else{
+          if(localStorage.getItem("time", time/1000) > time/1000){
+            localStorage.setItem("time",time/1000);
+          }
+        }
+        let rank = document.querySelector("h1");
+        rank.innerHtml = localStorage.getItem("time");
+        
+        setTimeout( ()=>{
+          alert("あなたのタイムは" + time/1000 + "秒です");
+          location.reload();},1000);
+        // location.reload();
+        
       }
     };
     //迷路を入れるcontainerの定義
@@ -215,14 +230,13 @@ start = () =>{
       let startTime = Date.now();
       let tick = () => {
         //タイマー
+        if(gameover){
+          return 0;
+        }
         let time = Date.now() - startTime;
         document.querySelector("#timer").textContent = (time / 1000).toFixed(2);
         requestAnimationFrame(tick);
-        if(gameover){
-          let timeout = time;
-          clearTimeout(time);
-          console.log(timeout);
-        }
+        
         
       };
       tick();

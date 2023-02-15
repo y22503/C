@@ -1,6 +1,6 @@
-const size = 55;
-let width = 15;
-let height = 5;
+const size = 40;
+let width = 20;
+let height = 10;
 
 let gameover = 0;
 
@@ -125,7 +125,6 @@ let dig = async () => {
 let currentX = 1;
 let currentY = 1;
 let move = (direction) => {
-  console.log(direction);
   if (gameover) {
     return;
   }
@@ -140,8 +139,23 @@ let move = (direction) => {
 
   if (currentX === width && currentY === height) {
     gameover = 1
-    location.reload();
-    alert("ゴール！！");
+    confetti();
+    if(localStorage == null){
+      localStorage.setItem("time", time/1000)
+    }
+    else{
+      if(localStorage.getItem("time", time/1000) > time/1000){
+        localStorage.setItem("time",time/1000);
+      }
+    }
+    let rank = document.querySelector("h1");
+    rank.innerHtml = localStorage.getItem("time");
+    
+    setTimeout( ()=>{
+      alert("あなたのタイムは" + time/1000 + "秒です");
+      location.reload();},1000);
+    // location.reload();
+    
   }
 };
 //迷路を入れるcontainerの定義
@@ -193,7 +207,7 @@ document.addEventListener('keydown', (e) => {
 
 
 window.onload = () => {
-  gameover = 1;
+  gameover=1;
   init();
   dig();
   showMap();
@@ -202,12 +216,13 @@ window.onload = () => {
   gameover = 0;
   let startTime = Date.now();
   let tick = () => {
-    if (gameover) {
-      return;
+    if(gameover){
+      return 0;
     }
-    let time = Date.now() - startTime;
+    time = Date.now() - startTime;
     document.querySelector("#timer").textContent = (time / 1000).toFixed(2);
     requestAnimationFrame(tick);
+    
   };
   tick();
 };
